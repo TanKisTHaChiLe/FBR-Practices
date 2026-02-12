@@ -1,5 +1,5 @@
 $background-dark: #161f24;
-$text-color--dark: white;
+$text-color-dark: white;
 $font-size: 16px;
 $theme: dark;
 
@@ -15,7 +15,7 @@ $theme: dark;
   border-radius: 8px;
   @if $theme == dark {
     background-color: $background-dark;
-    color: $text-color--dark;
+    color: $text-color-dark;
   }
 
   &_container {
