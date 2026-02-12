@@ -1,0 +1,35 @@
+$background-dark: #161f24;
+$text-color--dark: white;
+$font-size: 16px;
+$theme: dark;
+
+@mixin image($height) {
+  width: 100%;
+  height: $height;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card {
+  padding: 15px;
+  border-radius: 8px;
+  @if $theme == dark {
+    background-color: $background-dark;
+    color: $text-color--dark;
+  }
+
+  &_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: space-between;
+  }
+
+  &_image {
+    @include image(250px);
+  }
+
+  &_description {
+    font-size: $font-size;
+  }
+}
