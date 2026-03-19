@@ -30,5 +30,5 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.listen(3001, () => {
-  console.log("Srever is running");
+  console.log("Server is running");
 });

@@ -44,7 +44,7 @@ export const ProductPage = () => {
   };
 
   const handleDelete = async (id: string) => {
-    const ok = window.confirm("Удалить пользователя?");
+    const ok = window.confirm("Удалить товар?");
     if (!ok) return;
 
     try {
