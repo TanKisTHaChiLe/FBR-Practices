@@ -6,6 +6,7 @@ import { Products } from './pages/Products';
 import { ProductDetail } from './pages/ProductDetail';
 import { CreateProduct } from './pages/CreateProduct';
 import { EditProduct } from './pages/EditProduct';
+import { Users } from './pages/Users';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Layout } from './components/Layout';
 
@@ -74,6 +75,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <EditProduct />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Users />
               </Layout>
             </PrivateRoute>
           }

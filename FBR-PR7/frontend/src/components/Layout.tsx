@@ -8,8 +8,10 @@ import {
   Bars3Icon,
   XMarkIcon,
   UserCircleIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
+import { UserRole } from "../types";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,6 +22,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState<UserRole>('user');
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -27,6 +30,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       try {
         const user = JSON.parse(userStr);
         setUserName(`${user.first_name} ${user.last_name}`);
+        setUserRole(user.role);
       } catch (e) {
         console.error("Failed to parse user data");
       }
@@ -45,14 +49,47 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       href: "/products",
       icon: HomeIcon,
       current: location.pathname === "/products",
+      roles: ['user', 'seller', 'admin']
     },
     {
       name: "Создать товар",
       href: "/products/create",
       icon: PlusCircleIcon,
       current: location.pathname === "/products/create",
+      roles: ['seller', 'admin']
     },
+    {
+      name: "Пользователи",
+      href: "/users",
+      icon: UsersIcon,
+      current: location.pathname === "/users",
+      roles: ['admin']
+    }
   ];
+
+  const filteredNavigation = navigation.filter(item => 
+    item.roles.includes(userRole)
+  );
+
+  const getRoleBadge = () => {
+    const styles = {
+      admin: 'bg-purple-900/30 text-purple-300 border-purple-700',
+      seller: 'bg-blue-900/30 text-blue-300 border-blue-700',
+      user: 'bg-green-900/30 text-green-300 border-green-700'
+    };
+
+    const labels = {
+      admin: 'Администратор',
+      seller: 'Продавец',
+      user: 'Пользователь'
+    };
+
+    return (
+      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold border ${styles[userRole]}`}>
+        {labels[userRole]}
+      </span>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-dark-900">
@@ -89,15 +126,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       <UserCircleIcon className="h-8 w-8 text-dark-900" />
                     </div>
                     <div>
-                      <p className="font-medium text-accent-300">
-                        {userName || "Пользователь"}
-                      </p>
+                      <div className="flex items-center space-x-2">
+                        <p className="font-medium text-accent-300">
+                          {userName || "Пользователь"}
+                        </p>
+                        {getRoleBadge()}
+                      </div>
                       <p className="text-xs text-dark-400">Личный кабинет</p>
                     </div>
                   </div>
                 </div>
                 <nav className="space-y-2">
-                  {navigation.map((item) => (
+                  {filteredNavigation.map((item) => (
                     <Link
                       key={item.name}
                       to={item.href}
@@ -126,6 +166,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         )}
       </div>
+
       <div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:z-50 lg:w-72">
         <div className="nav-bar flex flex-col flex-1 min-h-0 border-r border-dark-600">
           <div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto">
@@ -143,9 +184,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <UserCircleIcon className="h-8 w-8 text-dark-900" />
                   </div>
                   <div>
-                    <p className="font-semibold text-accent-300">
-                      {userName || "Пользователь"}
-                    </p>
+                    <div className="flex items-center space-x-2">
+                      <p className="font-semibold text-accent-300">
+                        {userName || "Пользователь"}
+                      </p>
+                      {getRoleBadge()}
+                    </div>
                     <p className="text-xs text-dark-400">Активный сеанс</p>
                   </div>
                 </div>
@@ -153,7 +197,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
 
             <nav className="flex-1 px-4 space-y-1">
-              {navigation.map((item) => (
+              {filteredNavigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}

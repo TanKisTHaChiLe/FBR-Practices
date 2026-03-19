@@ -1,9 +1,12 @@
+export type UserRole = 'guest' | 'user' | 'seller' | 'admin';
+
 export interface User {
   id: string;
   email: string;
   first_name: string;
   last_name: string;
   passwordHash: string;
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -13,6 +16,7 @@ export interface CreateUserDTO {
   first_name: string;
   last_name: string;
   password: string;
+  role?: UserRole;
 }
 
 export interface LoginDTO {
@@ -25,6 +29,7 @@ export interface UserResponseDTO {
   email: string;
   first_name: string;
   last_name: string;
+  role: UserRole;
   createdAt: Date;
 }
 
@@ -33,10 +38,19 @@ export interface TokenPayload {
   email: string;
   first_name: string;
   last_name: string;
+  role: UserRole;
 }
 
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   user: UserResponseDTO;
+}
+
+export interface UpdateUserDTO {
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  role?: UserRole;
+  password?: string;
 }

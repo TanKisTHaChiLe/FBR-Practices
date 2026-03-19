@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import authRoutes from './routes/auth.routes';
 import productsRoutes from './routes/products.routes';
+import usersRoutes from './routes/users.routes'; // <-- импортируем
 
 dotenv.config();
 
@@ -22,7 +23,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,10 +33,7 @@ const swaggerOptions = {
     info: {
       title: 'Auth & Products API',
       version: '1.0.0',
-      description: 'API для аутентификации и управления товарами',
-      contact: {
-        name: 'Загородних Николай Анатольевич, Краснослободцева Дарья Борисовна'
-      }
+      description: 'API для аутентификации и управления товарами с системой ролей',
     },
     servers: [
       {
@@ -52,10 +49,7 @@ const swaggerOptions = {
           bearerFormat: 'JWT'
         }
       }
-    },
-    security: [{
-      bearerAuth: []
-    }]
+    }
   },
   apis: ['./src/routes/*.ts'],
 };
@@ -64,28 +58,14 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Auth & Products API',
+    message: 'Auth & Products API with RBAC',
     documentation: `http://localhost:${PORT}/api-docs`,
-    endpoints: {
-      auth: {
-        register: 'POST /api/auth/register',
-        login: 'POST /api/auth/login',
-        refresh: 'POST /api/auth/refresh',
-        me: 'GET /api/auth/me'
-      },
-      products: {
-        create: 'POST /api/products',
-        getAll: 'GET /api/products',
-        getOne: 'GET /api/products/:id',
-        update: 'PUT /api/products/:id',
-        delete: 'DELETE /api/products/:id'
-      }
-    }
   });
 });
 
@@ -102,3 +82,5 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
   console.log(`Swagger UI доступен по адресу http://localhost:${PORT}/api-docs`);
 });
+
+export default app;

@@ -1,9 +1,20 @@
+export type UserRole = 'user' | 'seller' | 'admin';
+
 export interface User {
   id: string;
   email: string;
   first_name: string;
   last_name: string;
+  role: UserRole;
   createdAt: string;
+}
+
+export interface UpdateUserDTO {
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  role?: UserRole;
+  password?: string;
 }
 
 export interface Product {
@@ -51,6 +62,24 @@ export interface TokenPayload {
   email: string;
   first_name: string;
   last_name: string;
+  role: UserRole;
   iat?: number;
   exp?: number;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: UserRole;
+  createdAt: string;
+}
+
+export interface RegisterDTO {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+  role: UserRole;
 }
