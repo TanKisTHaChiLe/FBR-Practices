@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { authApi } from '../api/auth';
-import { 
-  HomeIcon, 
-  PlusCircleIcon, 
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { authApi } from "../api/auth";
+import {
+  HomeIcon,
+  PlusCircleIcon,
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
-  UserCircleIcon
-} from '@heroicons/react/24/outline';
-import toast from 'react-hot-toast';
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,70 +19,80 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    const userStr = localStorage.getItem('user');
+    const userStr = localStorage.getItem("user");
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
         setUserName(`${user.first_name} ${user.last_name}`);
       } catch (e) {
-        console.error('Failed to parse user data');
+        console.error("Failed to parse user data");
       }
     }
   }, []);
 
   const handleLogout = () => {
     authApi.logout();
-    toast.success('Вы успешно вышли из системы', {
-      icon: '👋',
-      style: {
-        background: '#363636',
-        color: '#fff',
-      },
-    });
-    navigate('/login');
+    toast.success("Вы вышли из системы");
+    navigate("/login");
   };
 
   const navigation = [
-    { name: 'Все товары', href: '/products', icon: HomeIcon, current: location.pathname === '/products' },
-    { name: 'Создать товар', href: '/products/create', icon: PlusCircleIcon, current: location.pathname === '/products/create' },
+    {
+      name: "Все товары",
+      href: "/products",
+      icon: HomeIcon,
+      current: location.pathname === "/products",
+    },
+    {
+      name: "Создать товар",
+      href: "/products/create",
+      icon: PlusCircleIcon,
+      current: location.pathname === "/products/create",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-dark-900">
       <div className="lg:hidden">
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="nav-bar fixed top-0 left-0 right-0 z-50">
           <div className="flex items-center justify-between px-4 py-3">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-              Product Manager
-            </h1>
+            <h1 className="text-xl font-bold text-accent-400">ShopManager</h1>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-lg hover:bg-dark-700 transition-colors"
             >
               {isMobileMenuOpen ? (
-                <XMarkIcon className="h-6 w-6 text-gray-600" />
+                <XMarkIcon className="h-6 w-6 text-accent-300" />
               ) : (
-                <Bars3Icon className="h-6 w-6 text-gray-600" />
+                <Bars3Icon className="h-6 w-6 text-accent-300" />
               )}
             </button>
           </div>
         </div>
 
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}>
-            <div className="fixed right-0 top-0 bottom-0 w-64 bg-white shadow-xl animate-slide-up" onClick={e => e.stopPropagation()}>
+          <div
+            className="fixed inset-0 z-40 bg-dark-900/95 backdrop-blur-md"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div
+              className="fixed right-0 top-0 bottom-0 w-64 bg-dark-800 shadow-2xl border-l border-dark-600"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="p-6">
-                <div className="mb-6">
+                <div className="mb-8">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-                      <UserCircleIcon className="h-6 w-6 text-white" />
+                    <div className="avatar p-3">
+                      <UserCircleIcon className="h-8 w-8 text-dark-900" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{userName || 'Пользователь'}</p>
-                      <p className="text-sm text-gray-500">Личный кабинет</p>
+                      <p className="font-medium text-accent-300">
+                        {userName || "Пользователь"}
+                      </p>
+                      <p className="text-xs text-dark-400">Личный кабинет</p>
                     </div>
                   </div>
                 </div>
@@ -92,19 +102,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       key={item.name}
                       to={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
                         item.current
-                          ? 'bg-primary-50 text-primary-600'
-                          : 'text-gray-700 hover:bg-gray-50'
+                          ? "bg-accent-400/20 text-accent-300 border border-accent-400/30"
+                          : "text-dark-300 hover:bg-dark-700/50 hover:text-accent-300"
                       }`}
                     >
                       <item.icon className="h-5 w-5" />
                       <span>{item.name}</span>
                     </Link>
                   ))}
+                  <div className="divider my-4" />
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-all"
+                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-light-400 hover:bg-dark-700/50 transition-all"
                   >
                     <ArrowRightOnRectangleIcon className="h-5 w-5" />
                     <span>Выйти</span>
@@ -115,42 +126,48 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         )}
       </div>
-
       <div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:z-50 lg:w-72">
-        <div className="flex flex-col flex-1 min-h-0 bg-white/90 backdrop-blur-md border-r border-gray-200">
-          <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-6 mb-8">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-                Product Manager
+        <div className="nav-bar flex flex-col flex-1 min-h-0 border-r border-dark-600">
+          <div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto">
+            <div className="px-6 mb-8">
+              <h1 className="text-2xl font-bold text-accent-400">
+                ShopManager
               </h1>
+              <p className="text-xs text-dark-400">Управление товарами</p>
             </div>
-            
-            <div className="px-6 mb-6">
-              <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl">
-                <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-lg">
-                  <UserCircleIcon className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900">{userName || 'Пользователь'}</p>
-                  <p className="text-sm text-primary-600">Активный сеанс</p>
+
+            <div className="px-4 mb-8">
+              <div className="p-4 bg-dark-800/50 rounded-2xl border border-dark-600">
+                <div className="flex items-center space-x-3">
+                  <div className="avatar p-3">
+                    <UserCircleIcon className="h-8 w-8 text-dark-900" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-accent-300">
+                      {userName || "Пользователь"}
+                    </p>
+                    <p className="text-xs text-dark-400">Активный сеанс</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <nav className="mt-5 flex-1 px-4 space-y-2">
+            <nav className="flex-1 px-4 space-y-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
                   className={`group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${
                     item.current
-                      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg transform scale-105'
-                      : 'text-gray-700 hover:bg-gray-50 hover:scale-105'
+                      ? "bg-accent-400/10 text-accent-300 border border-accent-400/30"
+                      : "text-dark-300 hover:bg-dark-800/50 hover:text-accent-300"
                   }`}
                 >
                   <item.icon
                     className={`mr-3 h-5 w-5 ${
-                      item.current ? 'text-white' : 'text-gray-400 group-hover:text-gray-500'
+                      item.current
+                        ? "text-accent-400"
+                        : "text-dark-400 group-hover:text-accent-400"
                     }`}
                   />
                   {item.name}
@@ -159,22 +176,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </nav>
           </div>
 
-          <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+          <div className="flex-shrink-0 p-4 border-t border-dark-600">
             <button
               onClick={handleLogout}
-              className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-all hover:scale-105"
+              className="flex items-center w-full px-4 py-3 text-sm font-medium text-light-400 hover:bg-dark-800/50 rounded-xl transition-all group"
             >
-              <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5" />
-              Выйти из системы
+              <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <span>Выйти</span>
             </button>
           </div>
         </div>
       </div>
 
       <div className="lg:pl-72">
-        <main className="py-8 px-4 sm:px-6 lg:px-8 animate-fade-in">
-          {children}
-        </main>
+        <main className="py-8 px-4 sm:px-6 lg:px-8">{children}</main>
       </div>
     </div>
   );

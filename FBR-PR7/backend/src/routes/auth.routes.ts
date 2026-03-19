@@ -382,7 +382,7 @@ router.post('/refresh', (req: Request, res: Response): void => {
  *       404:
  *         description: Пользователь не найден
  */
-router.get('/me', authMiddleware, (req: Request, res: Response): void => {
+router.get('/me', (req: Request, res: Response): void => {
   const userId = req.user?.sub;
   
   if (!userId) {

@@ -8,7 +8,7 @@ export interface User {
 
 export interface Product {
   id: string;
-  name: string;
+  title: string;
   description: string;
   price: number;
   category: string;
@@ -18,7 +18,7 @@ export interface Product {
 }
 
 export interface CreateProductDTO {
-  name: string;
+  title: string;
   description: string;
   price: number;
   category: string;

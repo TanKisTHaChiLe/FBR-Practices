@@ -1,5 +1,5 @@
 import { apiClient } from './axios';
-import { Product, CreateProductDTO, UpdateProductDTO } from '../types';
+import { Product, CreateProductDTO } from '../types';
 
 export const productsApi = {
   getAll: async (): Promise<Product[]> => {

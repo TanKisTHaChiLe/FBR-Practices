@@ -4,35 +4,60 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+        dark: {
+          50: '#f0f4fd',
+          100: '#ced9e9',
+          200: '#adbecf',
+          300: '#8ba2b5',
+          400: '#6a879b',
+          500: '#4a6d82',
+          600: '#3b5669',
+          700: '#2d4050',
+          800: '#1f2a37',
+          900: '#0f141e',
+        },
+        accent: {
+          100: '#fffde7',
+          200: '#fff9c4',
+          300: '#fff59d',
+          400: '#fff176',
+          500: '#ffee58',
+          600: '#fdd835',
+        },
+        light: {
+          300: '#81d4fa',
+          400: '#4fc3f7',
+          500: '#29b6f6',
+          600: '#039be5',
+          700: '#0288d1',
         }
       },
+      backgroundImage: {
+        'gradient-dark': 'linear-gradient(to bottom, #0f141e 0%, #1f2a37 50%, #2d4050 100%)',
+        'gradient-light': 'radial-gradient(circle at 30% 20%, rgba(255, 245, 157, 0.2) 0%, transparent 50%)',
+      },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
+        'pulse-slow': 'pulse 4s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'glow': 'glow 8s ease-in-out infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+        glow: {
+          '0%, 100%': { filter: 'brightness(1)' },
+          '50%': { filter: 'brightness(1.2)' },
         },
+      },
+      boxShadow: {
+        'soft': '0 0 20px rgba(255, 245, 157, 0.3)',
+        'dark': '0 10px 40px rgba(0, 0, 0, 0.5)',
       },
     },
   },
