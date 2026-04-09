@@ -1,0 +1,90 @@
+<div>
+  <form id="note-form" style="margin-bottom: 2rem">
+    <div style="display: flex; gap: 0.5rem">
+      <input
+        type="text"
+        id="note-input"
+        placeholder="📝 Напишите заметку..."
+        required
+        style="
+          flex: 1;
+          padding: 0.85rem;
+          border-radius: 12px;
+          border: 1px solid #30363d;
+          background: #161b22;
+          color: #e6edf3;
+          font-size: 1rem;
+        "
+      />
+      <button
+        type="submit"
+        style="
+          padding: 0.85rem 1.5rem;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #238636, #2ea043);
+          color: white;
+          border: none;
+          cursor: pointer;
+          font-weight: 600;
+        "
+      >
+        ✨ Добавить
+      </button>
+    </div>
+  </form>
+
+  <div id="notes-list"></div>
+</div>
+
+<style>
+  .note-item {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .note-item:hover {
+    border-color: #f0b90b;
+    transform: translateX(4px);
+  }
+
+  .note-text {
+    color: #e6edf3;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-break: break-word;
+    padding-right: 2rem;
+  }
+
+  .note-date {
+    color: #3d444d;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
+
+  .delete-note {
+    float: right;
+    background: none;
+    border: none;
+    color: #f85149;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .delete-note:hover {
+    opacity: 1;
+  }
+
+  .empty-notes {
+    text-align: center;
+    color: #3d444d;
+    padding: 3rem;
+    font-size: 0.9rem;
+  }
+</style>
