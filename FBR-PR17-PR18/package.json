@@ -1,0 +1,16 @@
+{
+  "name": "kupala-notes-pwa",
+  "version": "1.0.0",
+  "description": "Полноценное PWA приложение для заметок с офлайн-режимом и уведомлениями",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "https": "npx http-server --ssl --cert localhost.pem --key localhost-key.pem -p 3000"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "socket.io": "^4.8.3",
+    "web-push": "^3.6.7"
+  }
+}
