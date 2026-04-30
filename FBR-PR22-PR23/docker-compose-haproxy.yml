@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  backend1:
+    build: ./backend
+    environment:
+      - PORT=3000
+    expose:
+      - "3000"
+
+  backend2:
+    build: ./backend
+    environment:
+      - PORT=3000
+    expose:
+      - "3000"
+
+  backend3:
+    build: ./backend
+    environment:
+      - PORT=3000
+    expose:
+      - "3000"
+
+  haproxy:
+    image: haproxy:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
