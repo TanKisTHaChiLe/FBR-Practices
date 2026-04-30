@@ -27,7 +27,7 @@ router.get(
   "/",
   authMiddleware,
   roleMiddleware(["admin"]),
-  cacheMiddleware(300),
+  cacheMiddleware(60),
   async (req, res) => {
     const usersResponse: UserResponseDTO[] = users.map((user) => ({
       id: user.id,
@@ -70,7 +70,7 @@ router.get(
   "/:id",
   authMiddleware,
   roleMiddleware(["admin"]),
-  cacheMiddleware(300),
+  cacheMiddleware(600),
   async (req, res) => {
     const { id } = req.params;
     const user = findUserById(id);

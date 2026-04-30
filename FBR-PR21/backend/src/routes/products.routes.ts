@@ -122,7 +122,7 @@ router.get(
   "/",
   authMiddleware,
   roleMiddleware(["user", "seller", "admin"]),
-  cacheMiddleware(300),
+  cacheMiddleware(60),
   (req: Request, res: Response): void => {
     const productsResponse: ProductResponseDTO[] = products.map((product) => ({
       ...product,
@@ -158,7 +158,7 @@ router.get(
   "/:id",
   authMiddleware,
   roleMiddleware(["user", "seller", "admin"]),
-  cacheMiddleware(300),
+  cacheMiddleware(600),
   async (req: Request, res: Response) => {
     const { id } = req.params;
 

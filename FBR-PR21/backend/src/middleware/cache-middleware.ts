@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { getFromRedis } from "../redis/redis-utils";
 
-export const cacheMiddleware = (ttl = 60) => 
+export const cacheMiddleware =
+  (ttl = 60) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const cacheKey = req.originalUrl;
     try {
@@ -9,8 +10,8 @@ export const cacheMiddleware = (ttl = 60) =>
       if (data) {
         return res.send(data);
       }
-
       res.locals.cacheKey = cacheKey;
+
       res.locals.ttl = ttl;
 
       next();
@@ -19,4 +20,3 @@ export const cacheMiddleware = (ttl = 60) =>
       next();
     }
   };
-
